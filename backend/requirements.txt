@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# JapanToGo - backend runtime dependencies
+# ---------------------------------------------------------------------------
+
+# Web framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# Settings / validation
+pydantic==2.10.4
+pydantic-settings==2.7.0
+email-validator==2.2.0
+
+# ORM / database
+SQLAlchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+greenlet==3.1.1
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib==1.7.4
+bcrypt==4.2.1
+
+# Media processing
+pillow==11.0.0
+puremagic==1.28
+
+# Rate limiting
+slowapi==0.1.9
+
+# HTTP client (used by the simulator / service integrations)
+httpx==0.28.1

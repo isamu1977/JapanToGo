@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Local data
+uploads/
+!uploads/.gitkeep
+*.log
+*.sqlite3
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

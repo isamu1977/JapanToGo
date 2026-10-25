@@ -1,0 +1,15 @@
+node_modules/
+.svelte-kit/
+build/
+.vercel/
+.netlify/
+output/
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+.vscode/
+.idea/
+static/uploads/

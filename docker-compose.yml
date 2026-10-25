@@ -1,0 +1,79 @@
+name: japantogo
+
+# Coolify-ready compose stack (DEPLOY ONLY).
+#
+# This compose file is NOT used for local development:
+#   * development  -> native PostgreSQL on localhost:5432,
+#                     `uvicorn --reload` + `npm run dev` (see backend/.env.example)
+#   * production   -> this compose file, on Coolify.
+#
+# There is intentionally NO PostgreSQL service here: production points
+# DATABASE_URL at an external / managed PostgreSQL instance. A single
+# connection string keeps the application and the Alembic migrations in sync.
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: "8000"
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      DEBUG: ${DEBUG:-false}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-14}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN:-}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:3000}
+      UPLOADS_DIR: /app/uploads
+      JPY_TO_BRL_RATE: ${JPY_TO_BRL_RATE:-0.038}
+    volumes:
+      - uploads:/app/uploads
+    ports:
+      - "${BACKEND_HOST_PORT:-8000}:8000"
+    networks:
+      - internal
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS http://localhost:8000/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL:?PUBLIC_API_BASE_URL is required}
+      INTERNAL_API_URL: http://backend:8000
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
+    networks:
+      - internal
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://localhost:3000/healthz || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  uploads:
+
+networks:
+  internal:
+    driver: bridge

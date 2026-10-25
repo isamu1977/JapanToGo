@@ -1,0 +1,51 @@
+{
+	"name": "JapanToGo - FROM JAPAN TO YOUR DOOR",
+	"short_name": "JapanToGo",
+	"description": "Compra assistida e redirecionamento de encomendas do Japão para o Brasil, com galpão próprio, pesagem, inspeção e simulação de custo de importação.",
+	"lang": "pt-BR",
+	"dir": "ltr",
+	"start_url": "/dashboard",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "portrait",
+	"background_color": "#ffffff",
+	"theme_color": "#e11d48",
+	"categories": ["shopping", "business", "utilities"],
+	"icons": [
+		{
+			"src": "/icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/icons/maskable-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Meu endereço",
+			"short_name": "Endereço",
+			"url": "/endereco"
+		},
+		{
+			"name": "Meus Pacotes",
+			"short_name": "Pacotes",
+			"url": "/suite"
+		},
+		{
+			"name": "Simulador de custo",
+			"short_name": "Simulador",
+			"url": "/simulador"
+		}
+	]
+}

@@ -1,0 +1,1 @@
+"""JapanToGo backend application package."""
